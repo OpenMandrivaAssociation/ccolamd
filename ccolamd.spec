@@ -3,7 +3,7 @@
 %define name		ccolamd
 %define NAME		CCOLAMD
 %define version		2.7.1
-%define release		%mkrel 1
+%define release		%mkrel 2
 %define major		%{version}
 %define libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
@@ -47,6 +47,7 @@ Requires:	suitesparse-common-devel >= 3.0.0
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
 Obsoletes:	%mklibname %name 2 -d
+Obsoletes:	%mklibname %name 2 -d -s
 
 %description -n %{develname}
 The CCOLAMD column approximate minimum degree ordering algorithm computes
