@@ -3,7 +3,7 @@
 %define name		ccolamd
 %define NAME		CCOLAMD
 %define version		2.7.1
-%define release		%mkrel 2
+%define release		%mkrel 3
 %define major		%{version}
 %define libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
@@ -29,7 +29,6 @@ tends to be sparser than that of A.  The Cholesky factorization of
 Summary:	Library of routines for computing column approximate minimum degree ordering
 Group:		System/Libraries
 Provides:	%{libname} = %{epoch}:%{version}-%{release}
-Obsoletes:	%mklibname %name 2
 
 %description -n %{libname}
 The CCOLAMD column approximate minimum degree ordering algorithm computes
