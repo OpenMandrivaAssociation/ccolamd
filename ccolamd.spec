@@ -3,7 +3,7 @@
 %define name		ccolamd
 %define NAME		CCOLAMD
 %define version		2.7.1
-%define release		%mkrel 6
+%define release		%mkrel 7
 %define major		%{version}
 %define libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
@@ -11,12 +11,13 @@
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
+Epoch:		%{epoch}
 Summary:	Routines for computing column approximate minimum degree ordering
 Group:		System/Libraries
 License:	LGPL
 URL:		http://www.cise.ufl.edu/research/sparse/ccolamd/
 Source0:	http://www.cise.ufl.edu/research/sparse/ccolamd/%{NAME}-%{version}.tar.gz
-Source1:	http://www.cise.ufl.edu/research/sparse/ufconfig/UFconfig-3.1.0.tar.gz
+Source1:	http://www.cise.ufl.edu/research/sparse/ufconfig/UFconfig-3.2.0.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
@@ -29,6 +30,7 @@ tends to be sparser than that of A.  The Cholesky factorization of
 Summary:	Library of routines for computing column approximate minimum degree ordering
 Group:		System/Libraries
 Provides:	%{libname} = %{epoch}:%{version}-%{release}
+Obsoletes:	%mklibname %{name} 2
 
 %description -n %{libname}
 The CCOLAMD column approximate minimum degree ordering algorithm computes
@@ -45,8 +47,8 @@ Group:		Development/C
 Requires:	suitesparse-common-devel >= 3.0.0
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
-Obsoletes:	%mklibname %name 2 -d
-Obsoletes:	%mklibname %name 2 -d -s
+Obsoletes:	%mklibname %{name} 2 -d
+Obsoletes:	%mklibname %{name} 2 -d -s
 
 %description -n %{develname}
 The CCOLAMD column approximate minimum degree ordering algorithm computes
