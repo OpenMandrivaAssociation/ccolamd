@@ -3,7 +3,7 @@
 %define name		ccolamd
 %define NAME		CCOLAMD
 %define version		2.7.1
-%define release		%mkrel 8
+%define release		%mkrel 9
 %define major		%{version}
 %define libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
