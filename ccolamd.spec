@@ -1,24 +1,18 @@
-%define epoch		0
-
-%define name		ccolamd
 %define NAME		CCOLAMD
-%define version		2.7.3
-%define release		%mkrel 1
 %define major		%{version}
 %define libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
 
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
-Epoch:		%{epoch}
+Name:		ccolamd
+Version:	2.8.0
+Release:	1
+Epoch:		1
 Summary:	Routines for computing column approximate minimum degree ordering
 Group:		System/Libraries
 License:	LGPL
 URL:		http://www.cise.ufl.edu/research/sparse/ccolamd/
 Source0:	http://www.cise.ufl.edu/research/sparse/ccolamd/%{NAME}-%{version}.tar.gz
-BuildRoot:	%{_tmppath}/%{name}-%{version}
-BuildRequires:	suitesparse-common-devel >= 3.2.0-2
+BuildRequires:	suitesparse-common-devel >= 4.0.0
 
 %description
 The CCOLAMD column approximate minimum degree ordering algorithm computes
@@ -29,8 +23,6 @@ tends to be sparser than that of A.  The Cholesky factorization of
 %package -n %{libname}
 Summary:	Library of routines for computing column approximate minimum degree ordering
 Group:		System/Libraries
-Provides:	%{libname} = %{epoch}:%{version}-%{release}
-Obsoletes:	%mklibname %{name} 2
 
 %description -n %{libname}
 The CCOLAMD column approximate minimum degree ordering algorithm computes
@@ -44,11 +36,9 @@ linked against %{NAME}.
 %package -n %{develname}
 Summary:	C routines for computing column approximate minimum degree ordering
 Group:		Development/C
-Requires:	suitesparse-common-devel >= 3.0.0
-Requires:	%{libname} = %{epoch}:%{version}-%{release}
-Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
-Obsoletes:	%mklibname %{name} 2 -d
-Obsoletes:	%mklibname %{name} 2 -d -s
+Requires:	suitesparse-common-devel >= 4.0.0
+Requires:	%{libname} = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
 
 %description -n %{develname}
 The CCOLAMD column approximate minimum degree ordering algorithm computes
@@ -60,19 +50,21 @@ This package contains the files needed to develop applications which
 use %{name}.
 
 %prep
-%setup -q -c 
-%setup -q -D -n %{name}-%{version}/%{NAME}
-mkdir ../UFconfig
-ln -sf %{_includedir}/suitesparse/UFconfig.* ../UFconfig
+%setup -q -c -n %{name}-%{version}
+cd %{NAME}
+find . -perm 0640 | xargs chmod 0644
+mkdir ../SuiteSparse_config
+ln -sf %{_includedir}/suitesparse/SuiteSparse_config.* ../SuiteSparse_config
 
 %build
+cd %{NAME}
 pushd Lib
     %make -f Makefile CC=%__cc CFLAGS="%{optflags} -fPIC -I%{_includedir}/suitesparse" INC=
     %__cc -shared -Wl,-soname,lib%{name}.so.%{major} -o lib%{name}.so.%{version} -lm *.o
 popd
 
 %install
-%__rm -rf %{buildroot}
+cd %{NAME}
 
 %__install -d -m 755 %{buildroot}%{_libdir} 
 %__install -d -m 755 %{buildroot}%{_includedir}/suitesparse 
@@ -92,24 +84,12 @@ done
 %__install -d -m 755 %{buildroot}%{_docdir}/%{name}
 %__install -m 644 README.txt Doc/*.txt Doc/ChangeLog %{buildroot}%{_docdir}/%{name}
 
-%clean
-%__rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/*.so.*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %{_docdir}/%{name}
 %{_includedir}/*
 %{_libdir}/*.so
 %{_libdir}/*.a
+
