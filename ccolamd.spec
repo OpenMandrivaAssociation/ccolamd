@@ -1,11 +1,11 @@
 %define NAME		CCOLAMD
-%define major		%{version}
+%define major		2
 %define libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
 
 Name:		ccolamd
 Version:	2.8.0
-Release:	1
+Release:	2
 Epoch:		1
 Summary:	Routines for computing column approximate minimum degree ordering
 Group:		System/Libraries
