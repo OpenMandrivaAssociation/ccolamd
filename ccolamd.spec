@@ -1,7 +1,7 @@
-%define NAME		CCOLAMD
-%define major		2
-%define libname		%mklibname %{name} %{major}
-%define develname	%mklibname %{name} -d
+%define NAME	CCOLAMD
+%define major	2
+%define libname	%mklibname %{name} %{major}
+%define devname	%mklibname %{name} -d
 
 Name:		ccolamd
 Version:	2.8.0
@@ -33,14 +33,14 @@ tends to be sparser than that of A.  The Cholesky factorization of
 This package contains the library needed to run programs dynamically
 linked against %{NAME}.
 
-%package -n %{develname}
+%package -n %{devname}
 Summary:	C routines for computing column approximate minimum degree ordering
 Group:		Development/C
 Requires:	suitesparse-common-devel >= 4.0.0
 Requires:	%{libname} = %{EVRD}
 Provides:	%{name}-devel = %{EVRD}
 
-%description -n %{develname}
+%description -n %{devname}
 The CCOLAMD column approximate minimum degree ordering algorithm computes
 a permutation vector P such that the LU factorization of A (:,P)
 tends to be sparser than that of A.  The Cholesky factorization of
@@ -60,8 +60,8 @@ ln -sf %{_includedir}/suitesparse/SuiteSparse_config.* ../SuiteSparse_config
 cd %{NAME}
 pushd Lib
     %global optflags %{optflags} -fforce-addr -frename-registers -funroll-loops -Ofast
-    %make -f Makefile CC=%__cc CFLAGS="%{optflags} -fPIC -I%{_includedir}/suitesparse" INC=
-    %__cc -shared -Wl,-soname,lib%{name}.so.%{major} -o lib%{name}.so.%{version} -lm *.o
+    %make -f Makefile CC=gcc CFLAGS="%{optflags} -fPIC -I%{_includedir}/suitesparse" INC=
+    gcc -shared -Wl,-soname,lib%{name}.so.%{major} -o lib%{name}.so.%{version} -lm *.o
 popd
 
 %install
@@ -88,7 +88,7 @@ done
 %files -n %{libname}
 %{_libdir}/*.so.*
 
-%files -n %{develname}
+%files -n %{devname}
 %{_docdir}/%{name}
 %{_includedir}/*
 %{_libdir}/*.so
