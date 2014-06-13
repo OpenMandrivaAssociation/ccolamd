@@ -5,11 +5,11 @@
 
 Name:		ccolamd
 Version:	2.8.0
-Release:	3
+Release:	4
 Epoch:		1
 Summary:	Routines for computing column approximate minimum degree ordering
 Group:		System/Libraries
-License:	LGPL
+License:	LGPLv2+
 URL:		http://www.cise.ufl.edu/research/sparse/ccolamd/
 Source0:	http://www.cise.ufl.edu/research/sparse/ccolamd/%{NAME}-%{version}.tar.gz
 BuildRequires:	suitesparse-common-devel >= 4.0.0
@@ -63,29 +63,29 @@ cd %{NAME}
 pushd Lib
     %global optflags %{optflags} -fforce-addr -frename-registers -funroll-loops -Ofast
     %make -f Makefile CC=gcc CFLAGS="%{optflags} -fPIC -I%{_includedir}/suitesparse" INC=
-    gcc -shared -Wl,-soname,lib%{name}.so.%{major} -o lib%{name}.so.%{version} -lm *.o
+    gcc %{ldflags} -shared -Wl,-soname,lib%{name}.so.%{major} -o lib%{name}.so.%{version} -lm *.o
 popd
 
 %install
 cd %{NAME}
 
-%__install -d -m 755 %{buildroot}%{_libdir} 
-%__install -d -m 755 %{buildroot}%{_includedir}/suitesparse 
+install -d -m 755 %{buildroot}%{_libdir} 
+install -d -m 755 %{buildroot}%{_includedir}/suitesparse 
 
 for f in Lib/*.so*; do
-    %__install -m 755 $f %{buildroot}%{_libdir}/`basename $f`
+    install -m 755 $f %{buildroot}%{_libdir}/`basename $f`
 done
 for f in Lib/*.a; do
-    %__install -m 644 $f %{buildroot}%{_libdir}/`basename $f`
+    install -m 644 $f %{buildroot}%{_libdir}/`basename $f`
 done
 for f in Include/*.h; do
-    %__install -m 644 $f %{buildroot}%{_includedir}/suitesparse/`basename $f`
+    install -m 644 $f %{buildroot}%{_includedir}/suitesparse/`basename $f`
 done
 
-%__ln_s lib%{name}.so.%{version} %{buildroot}%{_libdir}/lib%{name}.so
+ln -s lib%{name}.so.%{version} %{buildroot}%{_libdir}/lib%{name}.so
 
-%__install -d -m 755 %{buildroot}%{_docdir}/%{name}
-%__install -m 644 README.txt Doc/*.txt Doc/ChangeLog %{buildroot}%{_docdir}/%{name}
+install -d -m 755 %{buildroot}%{_docdir}/%{name}
+install -m 644 README.txt Doc/*.txt Doc/ChangeLog %{buildroot}%{_docdir}/%{name}
 
 %files -n %{libname}
 %{_libdir}/*.so.*
