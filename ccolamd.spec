@@ -5,7 +5,7 @@
 
 Name:		ccolamd
 Version:	2.8.0
-Release:	4
+Release:	5
 Epoch:		1
 Summary:	Routines for computing column approximate minimum degree ordering
 Group:		System/Libraries
