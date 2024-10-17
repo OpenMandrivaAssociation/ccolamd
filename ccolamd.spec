@@ -10,7 +10,7 @@ Epoch:		1
 Summary:	Routines for computing column approximate minimum degree ordering
 Group:		System/Libraries
 License:	LGPLv2+
-URL:		http://www.cise.ufl.edu/research/sparse/ccolamd/
+URL:		https://www.cise.ufl.edu/research/sparse/ccolamd/
 Source0:	http://www.cise.ufl.edu/research/sparse/ccolamd/%{NAME}-%{version}.tar.gz
 BuildRequires:	suitesparse-common-devel >= 4.0.0
 
